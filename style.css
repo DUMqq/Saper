@@ -1,0 +1,117 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+td {
+    background-color: rgb(56, 56, 56);
+    border: 1px solid black;
+
+    text-align: center;
+    font-weight: bold;
+    font-size: 28px;
+    color: blue;
+}
+td:hover{
+    background-color: rgb(69, 69, 69);
+}
+/* div{
+    border: 2px dashed blue;
+} */
+.all{
+    width: fit-content;
+    border-radius: 3%;
+    border: 2px dashed blue;
+    margin: 30px;
+    padding-top: 80px;
+    position: relative;
+    background-color: rgb(181, 181, 181);
+}
+.lowerDiv{
+    z-index: 2;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+.lowerDivs{
+    width: 40%;
+    text-align: center;
+}
+select{
+    border: none;
+    background-color: rgba(85, 85, 85, 0.5);
+    margin-top: 5px;
+}
+.lower{
+    font-variant: small-caps;
+}
+
+.lose::after{
+    content: "YOU LOSE";
+    position: absolute;
+    top: 0;
+    left: 0;
+    top: 80px;
+    width: 100%;
+    height: 447.2px; 
+    background-color: rgba(255, 0, 0, 0.5);
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+}
+.won::after{
+    content: "YOU WON";
+    position: absolute;
+    left: 0;
+    top: 80px;
+    width: 100%;
+    height: 447.2px; 
+    background-color: rgba(85, 255, 0, 0.5);
+    z-index: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+
+#restart{
+    position: absolute;
+    top: 5px;
+    text-align: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    padding: 5px;
+    margin-left: calc(50% - 35px);
+    background-color: gray;
+    color: aliceblue;
+    font-variant: small-caps;
+    z-index: 2;
+}
+.upper{
+    /* border: 1px dashed blue; */
+    position: absolute;
+    font-size: 28px;
+    font-variant: small-caps;
+    top: 24px;
+    padding: 0 10px;
+    z-index: 2;
+}
+#time{
+right: 10px;
+}
+#mines-count{
+    top: 0;
+}

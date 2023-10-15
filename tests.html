@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="all">
+        <span id="mines" class="upper">mines: <span id="mines-count" class="upper"></span></span>
+        <input type="button" id="restart" value="restart">
+        <span id="time" class="upper">4:20</span>
+
+        <table></table>
+        <div class="lowerDiv">
+            <div class="lowerDivs">
+                <span class="lower">Choose <br> difficulty</span><br>
+                <select name="difficulty" id="difficulty" >
+                    <option value="1">easy</option>
+                    <option value="1.5">medium</option>
+                    <option value="2">hard</option>
+                </select>
+            </div>
+            <div class="lowerDivs">
+                <span  class="lower">Choose <br>size</span><br>
+                <select name="size" id="size" >
+                    <option value="8">8x8</option>
+                    <option value="11">11x11</option>
+                    <option value="14">14x14</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script src="Tests.js"></script>
+
+</body>
+</html>
