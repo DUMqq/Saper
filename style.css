@@ -2,6 +2,13 @@
     padding: 0;
     margin: 0;
 }
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(86, 176, 255, 0.5);
+}
 table {
     border-collapse: collapse;
     table-layout: fixed;
@@ -25,7 +32,7 @@ td:hover{
     width: fit-content;
     border-radius: 3%;
     border: 2px dashed blue;
-    margin: 30px;
+    /* margin: 30px auto 0; */
     padding-top: 80px;
     position: relative;
     background-color: rgb(181, 181, 181);

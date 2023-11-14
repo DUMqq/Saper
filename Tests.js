@@ -30,6 +30,11 @@ function openClosest(pos){
                             field.children[g].children[r].style.color = 'grey'
                             field.children[g].children[r].style.backgroundColor = 'white'
                             field.children[g].children[r].textContent = field.children[g].children[r].minesArond
+                        }else if(field.children[g].children[r].minesArond >= 9){
+                            field.children[g].children[r].style.color = 'red'
+                            field.parentElement.classList.toggle('lose')
+                            field.children[g].children[r].textContent = '*'
+                            clearInterval(timer)
                         }
                     }
                     
@@ -38,7 +43,7 @@ function openClosest(pos){
         }
     }
 }
-// Открывает ближайшие по нажатию на цыфру, если достаточно мин поечено флажками
+// Открывает ближайшие по нажатию на цыфру, если достаточно мин помечено флажками
 function countFlags(pos){
     let i = Math.trunc(pos / size)
     let j = pos % size
