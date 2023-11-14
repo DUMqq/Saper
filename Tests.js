@@ -5,6 +5,7 @@ let minesTxt = document.querySelector('#mines-count')
 let timeTxt = document.querySelector('#time')
 let difficultyVal = document.querySelector('#difficulty')
 let sizeVal = document.querySelector('#size')
+let modeChanger = document.querySelector('#cusore-mode')
 
 // Открывает ближайшие ячейки возле пустой
 function openClosest(pos){
@@ -17,7 +18,7 @@ function openClosest(pos){
             if (field.children[g] !== undefined){
                 if (field.children[g].children[r] !== undefined){
                     
-                   if(!field.children[g].children[r].opened) {
+                   if(!field.children[g].children[r].opened && !field.children[g].children[r].isFlag) {
 
                         if(field.children[g].children[r].minesArond === 0){
                             freePosLeft--
@@ -30,11 +31,10 @@ function openClosest(pos){
                             field.children[g].children[r].style.color = 'grey'
                             field.children[g].children[r].style.backgroundColor = 'white'
                             field.children[g].children[r].textContent = field.children[g].children[r].minesArond
-                        }else if(field.children[g].children[r].minesArond >= 9){
-                            field.children[g].children[r].style.color = 'red'
+                        }else if(field.children[g].children[r].minesArond >= 9 && !field.children[g].children[r].isFlag){
                             field.parentElement.classList.toggle('lose')
-                            field.children[g].children[r].textContent = '*'
                             clearInterval(timer)
+                            clearAll()
                         }
                     }
                     
@@ -63,7 +63,6 @@ function countFlags(pos){
     }
     if(flags === Number(field.children[i].children[j].textContent)) openClosest(pos)
 }
-
 // Создание таблицы
 function createField(size){
     for(let i = 0; i < size; i++){
@@ -79,33 +78,33 @@ function createField(size){
             
             newTd.addEventListener('click', function(e){
                 // Поставить флаг
-                if(e.ctrlKey && !this.opened){
+                if(modeFlag && !this.opened){
                         if(!this.isFlag){
-                            this.style.color = 'red'
-                            this.textContent = '*'
+                            this.innerHTML = '<td id="0" style="width: 55px; height: 55px;"><img src="img/flag.png" class="img-in-td"></td>'
                             minesLeft--
                         } else {
-                            this.textContent = ''
+                            this.innerHTML = '<td id="0" style="width: 55px; height: 55px;"></td>'
                             minesLeft++
                         }
                     this.isFlag = !this.isFlag
                 }
-                else if(!this.isFlag){
-                    if(this.opened) countFlags(this.id)
+                else if(!this.isFlag){    //Обработать обычное нажание
+                    if(this.opened) countFlags(this.id) // По открытой клетке
 
-                    if(this.minesArond >= 9){
-                        this.style.color = 'red'
-                        field.parentElement.classList.toggle('lose')
-                        this.textContent = '*'
-                        clearInterval(timer)
-                    } else if(this.minesArond === 0){
-                        openClosest(this.id)
-                    } else if(this.minesArond < 9){
-                        if(!this.opened)freePosLeft--
-                        this.opened = true
-                        this.style.color = 'grey'
-                        this.style.backgroundColor = 'white'
-                        this.textContent = this.minesArond
+                    if(!modeFlag){ // По закрытой 
+                        if(this.minesArond >= 9){ // В клетке мина
+                            field.parentElement.classList.toggle('lose')
+                            clearInterval(timer)
+                            clearAll()
+                        } else if(this.minesArond === 0){ // Вокруг клетки нет мин
+                            openClosest(this.id)
+                        } else if(this.minesArond < 9){ // вокруг клетки есть мины
+                            if(!this.opened)freePosLeft--
+                            this.opened = true
+                            this.style.color = 'grey'
+                            this.style.backgroundColor = 'white'
+                            this.textContent = this.minesArond
+                        }
                     }
                 }
                 if(freePosLeft === 0) {
@@ -149,7 +148,6 @@ function plantMines(mines){
 function startGame(){
     size = Number(sizeVal.value)
     mines = Math.trunc(Number(difficultyVal.value) * size)
-    console.log(Number(difficultyVal.value));
     minesLeft = mines
     freePosLeft = Math.pow(size, 2) - mines 
     sureToRestart = false
@@ -166,6 +164,9 @@ function startGame(){
     }, 1000);
 }
 startGame()
+
+
+
 sizeVal.addEventListener('change', function(){
     size = Number(sizeVal.value)
     mines = Math.trunc(Number(difficultyVal.value) * size)
@@ -173,7 +174,6 @@ sizeVal.addEventListener('change', function(){
 difficultyVal.addEventListener('change', function(){
     mines = Math.trunc(Number(difficultyVal.value) * size)
 })
-
 restartButton.addEventListener('click', function(){
     if(sureToRestart || field.parentElement.className !== ''){
 
@@ -204,3 +204,31 @@ restartButton.addEventListener('click', function(){
         this.value = 'sure?'
     }
 })
+
+let modeFlag = false
+modeChanger.addEventListener('click', function(){
+    if(modeFlag) this.src = 'img/mine.png'
+    else this.src = 'img/flag.png'
+    modeFlag = !modeFlag
+})
+document.addEventListener('keydown', function(event) {
+    if (event.ctrlKey) {
+        if(modeFlag) modeChanger.src = 'img/mine.png'
+        else modeChanger.src = 'img/flag.png'
+        modeFlag = !modeFlag
+    }
+});  
+  
+function clearAll(){
+    for(let i = 0; i < size; i++){
+        for(let j = 0; j < size; j++){
+            if(field.children[i].children[j].minesArond >= 9 && !field.children[i].children[j].isFlag){
+                field.children[i].children[j].style.backgroundColor = 'white'
+                field.children[i].children[j].innerHTML = '<td id="0" style="width: 55px; height: 55px;"><img src="img/mine.png" class="img-in-td"></td>'
+            }
+        }
+    }
+}
+  
+  
+  
